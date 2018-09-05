@@ -1,8 +1,7 @@
 // solve the nQueens problem
 package nQueens
 
-import (
-)
+import ()
 
 /*
    create a new solution board by randomly choosing a
@@ -50,9 +49,9 @@ func generateSolutions(size int) []*board {
 				boards = append(boards, b)
 			}
 		}
-        if len(boards) > 0 {
-            break
-        }
+		if len(boards) > 0 {
+			break
+		}
 		m++
 	}
 	return boards

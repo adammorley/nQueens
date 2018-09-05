@@ -37,19 +37,10 @@ func (b *board) queenAllowed(sq square) bool {
 	}
 	return true
 }
+func (b *board) randomColumn(r int) square {
+	return square{r, rand.Intn(b.size)}
+}
 func (b *board) updateBlocked(sq square) {
 	b.blockedR[sq.r] = true
 	b.blockedC[sq.c] = true
-}
-func (b *board) createAllProposedQueens() (pq map[square]bool) {
-	pq = make(map[square]bool)
-	for r := 0; r < b.size; r++ {
-		for c := 0; c < b.size; c++ {
-			pq[square{r, c}] = true
-		}
-	}
-	return
-}
-func (b *board) randomColumn(r int) square {
-	return square{r, rand.Intn(b.size)}
 }

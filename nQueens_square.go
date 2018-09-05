@@ -12,7 +12,6 @@ func abs(n int) int {
 type square struct {
 	r, c int
 }
-
 // calculate whether two squares are on the same diagonal
 func (s0 square) sameDiagonal(s1 square) bool {
 	if abs(s0.r-s1.r) == abs(s0.c-s1.c) {
@@ -20,7 +19,6 @@ func (s0 square) sameDiagonal(s1 square) bool {
 	}
 	return false
 }
-
 // type to allow sorting (for printing)
 type byRow []square
 

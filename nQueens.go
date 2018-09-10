@@ -1,58 +1,63 @@
 // solve the nQueens problem
 package nQueens
 
-import ()
+import (
+        "container/list"
+        "strconv"
+        "strings"
+)
 
-/*
-   create a new solution board by randomly choosing a
-   column for the given row, and then picking
-   potential locations for the "pq" (proposed queen)
-   until a spot is found, breaking out early if so
-*/
-func generateSolution(r, sz int) *board {
-	if sz < 4 {
-		panic("small")
+const boardSize = int(8)
+
+func abs(n int) int {
+	if n < 0 {
+		return n * -1
 	}
-	var b *board = newBoard(sz)
-	iq := b.randomColumn(r)
-	b.placeQueen(iq)
-	for i := 0; i < b.size; i++ {
-		if i == r {
-			continue
-		}
-		for j := 0; j < b.size; j++ {
-			if b.blockedC[j] {
-				continue
-			}
-			pq := square{i, j}
-			if b.queenAllowed(pq) {
-				b.placeQueen(pq)
-				break
-			}
-		}
-	}
-	return b
+	return n
 }
 
-/*
-   generate all the solutions by generating a solution
-   for each initial starting queen location (in a given
-   row, across all the rows of the board)
-*/
-func generateSolutions(size int) []*board {
-	var boards []*board = make([]*board, 0)
-	m, n := 0, 100
-	for m < n {
-		for i := 0; i < size; i++ {
-			b := generateSolution(i, size)
-			if len(b.queens) == size {
-				boards = append(boards, b)
+func queenAllowed(r, c int, s [boardSize]int) bool {
+	for i := 0; i < r; i++ {
+		if s[i] == c || abs(i-r) == abs(c-s[i]) {
+			return false
+		}
+	}
+	return true
+}
+func placeQueen(r int, s [boardSize]int, l *list.List) {
+	if r == boardSize {
+		l.PushBack(s)
+	} else {
+		for c := 0; c < boardSize; c++ {
+			if queenAllowed(r, c, s) {
+				s[r] = c
+				placeQueen(r+1, s, l)
 			}
 		}
-		if len(boards) > 0 {
-			break
-		}
-		m++
 	}
-	return boards
+}
+func solve() *list.List {
+	var l *list.List = list.New()
+	var s [boardSize]int
+	placeQueen(0, s, l)
+	return l
+}
+func printSolutions(l *list.List) string {
+    var sb strings.Builder
+    sb.WriteString("board with size ")
+    sb.WriteString(strconv.Itoa(boardSize))
+    sb.WriteString("\n")
+    e := l.Front()
+    for e != nil {
+        s := e.Value.([boardSize]int)
+        for i := range s {
+            for j := 0; j < s[i]; j++ {
+                sb.WriteString(" ")
+            }
+            sb.WriteString("Q\n")
+        }
+        sb.WriteString("\n")
+        e = e.Next()
+    }
+    return sb.String()
 }

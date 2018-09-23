@@ -2,12 +2,12 @@
 package nQueens
 
 import (
-        "container/list"
-        "strconv"
-        "strings"
+	"container/list"
+	"strconv"
+	"strings"
 )
 
-const boardSize = int(8)
+const boardSize = 8
 
 func abs(n int) int {
 	if n < 0 {
@@ -37,27 +37,27 @@ func placeQueen(r int, s [boardSize]int, l *list.List) {
 	}
 }
 func solve() *list.List {
-	var l *list.List = list.New()
+	l := list.New()
 	var s [boardSize]int
 	placeQueen(0, s, l)
 	return l
 }
 func printSolutions(l *list.List) string {
-    var sb strings.Builder
-    sb.WriteString("board with size ")
-    sb.WriteString(strconv.Itoa(boardSize))
-    sb.WriteString("\n")
-    e := l.Front()
-    for e != nil {
-        s := e.Value.([boardSize]int)
-        for i := range s {
-            for j := 0; j < s[i]; j++ {
-                sb.WriteString(" ")
-            }
-            sb.WriteString("Q\n")
-        }
-        sb.WriteString("\n")
-        e = e.Next()
-    }
-    return sb.String()
+	var sb strings.Builder
+	sb.WriteString("board with size ")
+	sb.WriteString(strconv.Itoa(boardSize))
+	sb.WriteString("\n")
+	e := l.Front()
+	for e != nil {
+		s := e.Value.([boardSize]int)
+		for i := range s {
+			for j := 0; j < s[i]; j++ {
+				sb.WriteString(" ")
+			}
+			sb.WriteString("Q\n")
+		}
+		sb.WriteString("\n")
+		e = e.Next()
+	}
+	return sb.String()
 }

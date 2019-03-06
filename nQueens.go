@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-const boardSize = 8
+const boardSize = 5
 
 func abs(n int) int {
 	if n < 0 {
@@ -55,6 +55,26 @@ func printSolutions(l *list.List) string {
 				sb.WriteString(" ")
 			}
 			sb.WriteString("Q\n")
+		}
+		sb.WriteString("\n")
+		e = e.Next()
+	}
+	return sb.String()
+}
+func printValues(l *list.List) string {
+	var sb strings.Builder
+	sb.WriteString("board with size ")
+	sb.WriteString(strconv.Itoa(boardSize))
+	sb.WriteString("\n")
+	e := l.Front()
+	for e != nil {
+		s := e.Value.([boardSize]int)
+		for i := range s {
+            sb.WriteString("board row ")
+            sb.WriteString(strconv.Itoa(i))
+            sb.WriteString(" is column ")
+            sb.WriteString(strconv.Itoa(s[i]))
+            sb.WriteString("\n")
 		}
 		sb.WriteString("\n")
 		e = e.Next()
